@@ -1,0 +1,4 @@
+
+- name: Install whatsapp daemon
+  sudo: yes
+  template: src=init.tpl dest=/etc/init.d/whatsapp-daemon owner=root group=root mode=0755

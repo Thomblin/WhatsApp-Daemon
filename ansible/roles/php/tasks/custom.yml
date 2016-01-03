@@ -1,0 +1,37 @@
+
+- git: repo=https://github.com/mgp25/curve25519-php.git
+       dest=/tmp/curve25519
+       version=master
+
+- git: repo=https://github.com/allegro/php-protobuf.git
+       dest=/tmp/protobuf
+       version=master
+
+- name: Build php extension
+  shell: "{{item[1]}}"
+  args:
+    chdir: "/tmp/{{item[0]}}"
+  with_nested:
+    - php.custom_packages
+    - ['phpize', './configure', 'make', 'sudo make install']
+  when: php.custom_packages is defined
+
+- name: Create extension .ini files
+  template: >
+    src="extension.tpl"
+    dest="/etc/php5/mods-available/{{item}}.ini"
+    owner="root"
+    group="root"
+    mode=0644
+  with_items: php.custom_packages
+  when: php.custom_packages is defined
+
+- name: Activate extensions
+  file: >
+    src=/etc/php5/mods-available/{{item[1]}}.ini
+    dest=/etc/php5/{{item[0]}}/conf.d/50-{{item[1]}}.ini
+    state=link
+  with_nested:
+    - ['cli', 'fpm', 'apache2']
+    - php.custom_packages
+  when: php.custom_packages is defined

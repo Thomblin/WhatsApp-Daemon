@@ -1,0 +1,33 @@
+paths:
+    migrations: %%PHINX_CONFIG_DIR%%/whatsapp/Db/migrations
+    seeds: %%PHINX_CONFIG_DIR%%/whatsapp/Db/seeds
+
+environments:
+    default_migration_table: phinxlog
+    default_database: development
+    production:
+        adapter: mysql
+        host: localhost
+        name: whatsapp
+        user: root
+        pass: '123'
+        port: 3306
+        charset: utf8
+
+    development:
+        adapter: mysql
+        host: localhost
+        name: whatsapp
+        user: root
+        pass: '123'
+        port: 3306
+        charset: utf8
+
+    testing:
+        adapter: mysql
+        host: localhost
+        name: whatsapp
+        user: root
+        pass: '123'
+        port: 3306
+        charset: utf8

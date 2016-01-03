@@ -1,0 +1,15 @@
+{
+    "require": {
+        "whatsapp/chat-api": "^3.0",
+        "bcosca/fatfree": "^3.5",
+        "philo/laravel-blade": "^3.1",
+        "shaneharter/php-daemon": "@dev",
+        "robmorgan/phinx": "^0.5.1"
+    },
+    "autoload": {
+      "psr-4": {
+        "Thomblin\\Base\\": "base",
+        "Thomblin\\Whatsapp\\": "whatsapp"
+      }
+    }
+}

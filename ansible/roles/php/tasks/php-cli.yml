@@ -1,0 +1,15 @@
+---
+- name: ensure timezone is set in cli php.ini
+  lineinfile: dest=/etc/php5/cli/php.ini
+              regexp='date.timezone ='
+              line='date.timezone = {{ server.timezone }}'
+
+- name: enabling opcache cli
+  lineinfile: dest=/etc/php5/cli/php.ini
+              regexp=';?opcache.enable_cli=\d'
+              line='opcache.enable_cli=1'
+
+- name: do not populate $HTTP_RAW_POST_DATA
+  lineinfile: dest=/etc/php5/cli/php.ini
+              regexp=';always_populate_raw_post_data = -1'
+              line='always_populate_raw_post_data = -1'

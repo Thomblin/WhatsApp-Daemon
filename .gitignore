@@ -1,0 +1,7 @@
+.vagrant/
+*.iml
+.idea/
+
+php/vendor
+
+templates/cache/*.php
