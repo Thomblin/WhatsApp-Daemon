@@ -2,6 +2,7 @@
 *.iml
 .idea/
 
+/php/phinx.yml
 php/vendor
 
 templates/cache/*.php
