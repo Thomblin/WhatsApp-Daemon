@@ -12,6 +12,7 @@ use Thomblin\Base\Controller as BaseController;
 use Thomblin\Whatsapp\Client\Web;
 use Thomblin\Whatsapp\Db\Pdo;
 use Thomblin\Whatsapp\Repository\Credentials;
+use Thomblin\Whatsapp\Repository\Messages as MessagesRepository;
 
 class Messages extends BaseController
 {
@@ -75,10 +76,11 @@ class Messages extends BaseController
     {
         // this supports only one worker and one whatsapp account so far
 
-        $repositry = new Credentials(new Pdo());
+        $pdo = Pdo::createInstance();
+
+        $repositry = new Credentials($pdo);
         $credentials = $repositry->getCredentials(Credentials::PROTOCOL_WHATSAPP);
 
-        $communicator = new Web($credentials[0]);
-        return $communicator;
+        return new Web($credentials[0], new MessagesRepository($pdo));
     }
 }

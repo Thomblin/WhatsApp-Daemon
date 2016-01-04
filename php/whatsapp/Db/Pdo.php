@@ -8,21 +8,30 @@
 
 namespace Thomblin\Whatsapp\Db;
 
+use InvalidArgumentException;
+use Symfony\Component\Yaml\Yaml;
+
 class Pdo extends \PDO
 {
-
     /**
-     * (PHP 5 &gt;= 5.1.0, PECL pdo &gt;= 0.1.0)<br/>
-     * Creates a PDO instance representing a connection to a database
-     * @link http://php.net/manual/en/pdo.construct.php
-     * @param $dsn
-     * @param $username [optional]
-     * @param $passwd [optional]
-     * @param $options [optional]
+     * @param string $environment
+     * @return Pdo
      */
-    public function __construct($dsn = "mysql:dbname=whatsapp;host=localhost", $username = "root", $passwd = "123", $options = array())
+    public static function createInstance($environment = 'production')
     {
-        parent::__construct($dsn, $username, $passwd, $options);
+        $config = Yaml::parse(file_get_contents(__DIR__ . '/../../phinx.yml'));
+
+        if (!isset($config['environments'][$environment])) {
+            throw new InvalidArgumentException("unkown environment '$environment'");
+        }
+
+        $login = $config['environments'][$environment];
+
+        return new PDO(
+            "{$login['adapter']}:dbname={$login['name']};host={$login['host']}",
+            $login['user'],
+            $login['pass']
+        );
     }
 
     /**

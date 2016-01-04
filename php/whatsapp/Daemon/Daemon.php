@@ -28,8 +28,8 @@ class Daemon extends \Core_Daemon
 
         // this supports only one worker and one whatsapp account so far
 
-        $repositry = new Credentials(new Pdo());
-        $credentials = $repositry->getCredentials(Credentials::PROTOCOL_WHATSAPP);
+        $repository = new Credentials(Pdo::createInstance());
+        $credentials = $repository->getCredentials(Credentials::PROTOCOL_WHATSAPP);
 
         $this->Worker->poll($credentials[0]);
     }

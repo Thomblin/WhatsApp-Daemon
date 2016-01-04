@@ -26,7 +26,7 @@ if (isset($response->pw) ) {
 
     $nickname = readline("Enter a nickname for your account: ");
 
-    $credentials = new Credentials(new Pdo());
+    $credentials = new Credentials(Pdo::createInstance());
 
     $credentials->addCredential(new \Thomblin\Whatsapp\Db\Model\Credential([
         'protocol' => Credentials::PROTOCOL_WHATSAPP,

@@ -8,8 +8,7 @@
 
 namespace Thomblin\Whatsapp\Client;
 
-use Thomblin\Whatsapp\Db\Pdo;
-use Thomblin\Whatsapp\Log\Void;
+use Thomblin\Whatsapp\Db\Model\Message;
 use Thomblin\Whatsapp\Db\Model\Credential;
 use Thomblin\Whatsapp\Repository\Credentials;
 use Thomblin\Whatsapp\Repository\Messages;
@@ -19,21 +18,23 @@ class Web
     const ONE_SECOND = 1;
 
     /**
-     * @var Client
-     */
-    private $client;
-    /**
      * @var Credential
      */
     private $credential;
+    /**
+     * @var Messages
+     */
+    private $repository;
 
     /**
      * Communicator constructor.
      * @param Credential $credential
+     * @param Messages $repository
      */
-    public function __construct(Credential $credential)
+    public function __construct(Credential $credential, Messages $repository)
     {
         $this->credential = $credential;
+        $this->repository = $repository;
     }
 
     /**
@@ -44,32 +45,24 @@ class Web
      */
     public function sendMessage($target, $message)
     {
-        return $this->getClient()->createMessage($target, $message);
+        return $this->repository->createMessage(new Message([
+            'protocol' => Credentials::PROTOCOL_WHATSAPP,
+            'from' => $this->credential->username,
+            'nickname' => $this->credential->nickname,
+            'to' => $target,
+            'body' => $message
+        ]));
     }
 
     public function loadNewMessages()
     {
-        $repository = new Messages(new Pdo());
-
-        $messages = $repository->getUnreadMessages(Credentials::PROTOCOL_WHATSAPP, $this->credential->username);
+        $messages = $this->repository->getUnreadMessages(Credentials::PROTOCOL_WHATSAPP, $this->credential->username);
 
         if (0 < count($messages)) {
-            $repository->markMessagesRead(array_column($messages, 'id'));
+            $this->repository->markMessagesRead(array_column($messages, 'id'));
         }
 
         return $messages;
-    }
-
-    /**
-     * @return Client
-     */
-    private function getClient()
-    {
-        if (null === $this->client) {
-            $this->client = new Client($this->credential, new Pdo(), new Void());
-        }
-
-        return $this->client;
     }
 
     public function getUsername()

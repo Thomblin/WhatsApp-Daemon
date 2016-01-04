@@ -65,14 +65,4 @@ class Client
     {
         $this->transmitter->sendMessages();
     }
-
-    /**
-     * @param string $to
-     * @param string $text
-     * @return string
-     */
-    public function createMessage($to, $text)
-    {
-        return $this->transmitter->createMessage($to, $text);
-    }
 }

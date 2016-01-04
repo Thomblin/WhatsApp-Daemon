@@ -47,11 +47,15 @@ class Worker implements \Core_IWorker
      */
     public function poll(Credential $credential)
     {
-        $client = new Client($credential, new Pdo(), new CoreWorkerMediator($this->mediator));
+        $client = new Client($credential, Pdo::createInstance(), new CoreWorkerMediator($this->mediator));
 
-        while(true) {
-            $client->pollMessages();
-            $client->sendMessages();
+        try {
+            while (true) {
+                $client->pollMessages();
+                $client->sendMessages();
+            }
+        } catch (\Exception $e) {
+            $this->mediator->log("error: " . $e->getMessage() . "\n" . $e->getTraceAsString());
         }
     }
 }

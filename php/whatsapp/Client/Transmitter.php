@@ -8,7 +8,6 @@
 
 namespace Thomblin\Whatsapp\Client;
 
-use Thomblin\Whatsapp\Db\Model\Message;
 use Thomblin\Whatsapp\Log\Logger;
 use Thomblin\Whatsapp\Repository\Credentials;
 use Thomblin\Whatsapp\Repository\Messages;
@@ -71,22 +70,5 @@ class Transmitter
                 $this->repository->markMessageSent($message['id'], $msgID);
             }
         }
-    }
-
-    /**
-     * @param string $to
-     * @param string $text
-     *
-     * @return string
-     */
-    public function createMessage($to, $text)
-    {
-        return $this->repository->createMessage(new Message([
-            'protocol' => Credentials::PROTOCOL_WHATSAPP,
-            'from' => $this->whatsprot->getPhoneNumber(),
-            'nickname' => $this->whatsprot->getUsername(),
-            'to' => $to,
-            'body' => $text
-        ]));
     }
 }
