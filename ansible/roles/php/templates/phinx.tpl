@@ -4,30 +4,22 @@ paths:
 
 environments:
     default_migration_table: phinxlog
-    default_database: development
+    default_database: migration
+
+    migration:
+        adapter: mysql
+        host: localhost
+        name: whatsapp
+        user: root
+        pass: '{{mysql.root_password}}'
+        port: 3306
+        charset: utf8
+
     production:
         adapter: mysql
         host: localhost
         name: whatsapp
         user: root
-        pass: '123'
-        port: 3306
-        charset: utf8
-
-    development:
-        adapter: mysql
-        host: localhost
-        name: whatsapp
-        user: root
-        pass: '123'
-        port: 3306
-        charset: utf8
-
-    testing:
-        adapter: mysql
-        host: localhost
-        name: whatsapp
-        user: root
-        pass: '123'
+        pass: '{{mysql.root_password}}'
         port: 3306
         charset: utf8

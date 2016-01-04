@@ -35,3 +35,6 @@
     - ['cli', 'fpm', 'apache2']
     - php.custom_packages
   when: php.custom_packages is defined
+
+- name: Create phinx.yml
+  template: src=phinx.tpl dest=/vagrant/php/phinx.yml
