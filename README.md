@@ -66,16 +66,16 @@ If your connected whatsapp account receives a new message it will be displayed a
     |   composer.json - php dependencies
     |   index.php - routing
     |   phinx.yml - DB configuration (created by ansible)
-    └──-base - contains general classes
-    └──-vendor  - php externals
-    └──-whatsapp
-        └──-cli - CLI executables
-        └──-Client - Whatsapp helper that are used for communication
-        └──-Controller - Controller for our web interface 
-        └──-Daemon - Whatsapp daemon which is used to handle all messages
-        └──-Db - DB migrations and models
-        └──-Log - log classes
-        └──-Repository - classes containing db queries
+    └───base - contains general classes
+    └───vendor  - php externals
+    └───whatsapp
+        └───cli - CLI executables
+        └───Client - Whatsapp helper that are used for communication
+        └───Controller - Controller for our web interface 
+        └───Daemon - Whatsapp daemon which is used to handle all messages
+        └───Db - DB migrations and models
+        └───Log - log classes
+        └───Repository - classes containing db queries
 └───templates 
 └──────cache - Blade cache
 └──────views - Blade templates
