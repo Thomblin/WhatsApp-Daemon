@@ -55,4 +55,32 @@ logs can be found in either way at
 open `http://192.168.33.99` in your browser. 
 If your connected whatsapp account receives a new message it will be displayed and you may answer.
      
- 
+# Important files and folders
+```
+│   README.md - instructions
+│   install.sh - install dependencies, connect to mobile phone
+│   Vagrantfile - vagrant configuration
+│
+└───ansible - ansible configuration files to provision your environment
+└───php
+    |   composer.json - php dependencies
+    |   index.php - routing
+    |   phinx.yml - DB configuration (created by ansible)
+    └──-base - contains general classes
+    └──-vendor  - php externals
+    └──-whatsapp
+        └──-cli - CLI executables
+        └──-Client - Whatsapp helper that are used for communication
+        └──-Controller - Controller for our web interface 
+        └──-Daemon - Whatsapp daemon which is used to handle all messages
+        └──-Db - DB migrations and models
+        └──-Log - log classes
+        └──-Repository - classes containing db queries
+└───templates 
+└──────cache - Blade cache
+└──────views - Blade templates
+└───www
+    │   index.php - Nginx points to this file
+    ├───css - global css files
+    └───js - global js files
+```
