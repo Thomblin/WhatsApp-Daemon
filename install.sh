@@ -15,4 +15,4 @@ php vendor/bin/phinx migrate
 
 # WhatsApp registration
 
-php cli/register.php
+php whatsapp/cli/register.php
